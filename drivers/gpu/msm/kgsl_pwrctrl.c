@@ -1145,15 +1145,21 @@ int kgsl_pwrctrl_init(struct kgsl_device *device)
 	}
 	pwr->num_pwrlevels = pdata->num_levels;
 
-	/* Initialize the user and thermal clock constraints */
+	/*
+	 * Frequency table references for initialization
+	 * of constraints.
+	 * Maximum -> max_pwrlevel -> 533MHz
+	 * Initial -> init_pwrlevel -> 533MHz
+	 * Active  -> active_pwrlevel -> 320MHz
+	 * Minimum -> min_pwrlevel -> 100MHz
+	 */
+	pwr->max_pwrlevel = 0; /* 533MHz */
+	pwr->min_pwrlevel = pdata->num_levels - 2; /* 100MHz */
+	pwr->thermal_pwrlevel = 0; /* 533MHz */
 
-	pwr->max_pwrlevel = 0;
-	pwr->min_pwrlevel = pdata->num_levels - 2;
-	pwr->thermal_pwrlevel = 0;
-
-	pwr->active_pwrlevel = pdata->init_level;
-	pwr->default_pwrlevel = pdata->init_level;
-	pwr->init_pwrlevel = pdata->init_level;
+	pwr->active_pwrlevel = pdata->num_levels - 4; /* 320MHz */
+	pwr->default_pwrlevel = pwr->min_pwrlevel; /* 100MHz */
+	pwr->init_pwrlevel = pwr->max_pwrlevel; /* 533MHz */
 	for (i = 0; i < pdata->num_levels; i++) {
 		pwr->pwrlevels[i].gpu_freq =
 		(pdata->pwrlevel[i].gpu_freq > 0) ?
