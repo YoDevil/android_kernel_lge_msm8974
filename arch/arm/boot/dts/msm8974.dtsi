@@ -145,7 +145,14 @@
 					fsmgr_flags = "wait";
 					status = "ok";
 				};
-
+				vendor {
+					compatible = "android,vendor";
+					dev = "/dev/block/platform/msm_sdcc.1/by-name/vendor";
+					type = "ext4";
+					mnt_flags = "ro,barrier=1";
+					fsmgr_flags = "wait";
+					status = "ok";
+				};
 			};
 		};
 	};
