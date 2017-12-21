@@ -488,7 +488,7 @@ static int st_scsi_execute(struct st_request *SRpnt, const unsigned char *cmd,
 	if (!req)
 		return DRIVER_ERROR << 24;
 
-	req->cmd_type = REQ_TYPE_BLOCK_PC;
+	blk_rq_set_block_pc(req);
 	req->cmd_flags |= REQ_QUIET;
 
 	mdata->null_mapped = 1;
@@ -1268,9 +1268,9 @@ static int st_open(struct inode *inode, struct file *filp)
  err_out:
 	normalize_buffer(STp->buffer);
 	STp->in_use = 0;
-	scsi_tape_put(STp);
 	if (resumed)
 		scsi_autopm_put_device(STp->device);
+	scsi_tape_put(STp);
 	mutex_unlock(&st_mutex);
 	return retval;
 

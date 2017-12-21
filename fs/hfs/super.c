@@ -138,9 +138,9 @@ static int hfs_show_options(struct seq_file *seq, struct dentry *root)
 	struct hfs_sb_info *sbi = HFS_SB(root->d_sb);
 
 	if (sbi->s_creator != cpu_to_be32(0x3f3f3f3f))
-		seq_printf(seq, ",creator=%.4s", (char *)&sbi->s_creator);
+		seq_show_option_n(seq, "creator", (char *)&sbi->s_creator, 4);
 	if (sbi->s_type != cpu_to_be32(0x3f3f3f3f))
-		seq_printf(seq, ",type=%.4s", (char *)&sbi->s_type);
+		seq_show_option_n(seq, "type", (char *)&sbi->s_type, 4);
 	seq_printf(seq, ",uid=%u,gid=%u", sbi->s_uid, sbi->s_gid);
 	if (sbi->s_file_umask != 0133)
 		seq_printf(seq, ",file_umask=%o", sbi->s_file_umask);
@@ -457,6 +457,7 @@ static struct file_system_type hfs_fs_type = {
 	.kill_sb	= kill_block_super,
 	.fs_flags	= FS_REQUIRES_DEV,
 };
+MODULE_ALIAS_FS("hfs");
 
 static void hfs_init_once(void *p)
 {
