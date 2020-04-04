@@ -1320,17 +1320,18 @@ CONFIG_RFKILL_LEDS=y
 # CONFIG_NET_9P is not set
 # CONFIG_CAIF is not set
 # CONFIG_CEPH_LIB is not set
-# CONFIG_NFC is not set
+CONFIG_NFC=y
+# CONFIG_NFC_NCI is not set
+# CONFIG_NFC_LLCP is not set
 
 #
 # Near Field Communication (NFC) devices
 #
-CONFIG_LGE_NFC=y
-CONFIG_PN544_NFC=y
+# CONFIG_LGE_NFC is not set
+CONFIG_NFC_PN544=y
 # CONFIG_NFC_PN533 is not set
 # CONFIG_NFC_BCM2079X is not set
-CONFIG_LGE_NFC_USE_PMIC=y
-CONFIG_NFC_QNCI=y
+# CONFIG_NFC_QNCI is not set
 
 #
 # Device Drivers
